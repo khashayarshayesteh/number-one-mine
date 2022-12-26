@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Table(name = "clients_vendors")
 public class ClientVendor extends BaseEntity {
 
+    @Enumerated(EnumType.STRING)
     private ClientVendorType clientVendorType;
 
     private String clientVendorName;
@@ -24,15 +25,13 @@ public class ClientVendor extends BaseEntity {
     private String website;
 
     @OneToOne
-    @JoinColumn(name = "address_id")
     private Address address;
 
-
     @ManyToOne
-    @JoinColumn(name = "company_id")
     private Company company;
 
-    public ClientVendor(ClientVendorType clientVendorType, String clientVendorName, String phone, String website, Address address, Company company) {
+    public ClientVendor(Long id, LocalDateTime insertDateTime, Long insertUserId, LocalDateTime lastUpdateDateTime, Long lastUpdateUserId, Boolean isDeleted, ClientVendorType clientVendorType, String clientVendorName, String phone, String website, Address address, Company company) {
+        super(id, insertDateTime, insertUserId, lastUpdateDateTime, lastUpdateUserId, isDeleted);
         this.clientVendorType = clientVendorType;
         this.clientVendorName = clientVendorName;
         this.phone = phone;
