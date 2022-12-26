@@ -8,7 +8,6 @@ import com.cydeo.service.ClientVendorService;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class ClientVendorServiceImpl implements ClientVendorService {
