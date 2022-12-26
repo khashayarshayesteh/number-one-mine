@@ -21,7 +21,7 @@ public class MapperUtil {
         return modelMapper.map(objectToBeConverted, (Type) convertedObject.getClass());
     }
 
-    public ClientVendorDto convertToDto(ClientVendor entity){
-        return modelMapper.map(entity,ClientVendorDto.class);
-    }
+//    public ClientVendorDto convertToDto(ClientVendor entity){
+//        return modelMapper.map(entity,ClientVendorDto.class);
+//    }
 }
