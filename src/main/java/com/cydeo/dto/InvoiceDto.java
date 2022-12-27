@@ -1,8 +1,6 @@
 package com.cydeo.dto;
-
 import com.cydeo.enums.InvoiceStatus;
 import com.cydeo.enums.InvoiceType;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -12,6 +10,7 @@ public class InvoiceDto {
     private String invoiceNo;
 
     private InvoiceStatus invoiceStatus;
+
     private InvoiceType invoiceType;
 
     private LocalDate date;

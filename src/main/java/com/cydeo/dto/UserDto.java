@@ -1,8 +1,8 @@
 package com.cydeo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.cydeo.entity.Company;
+import com.cydeo.entity.Role;
+import lombok.*;
 
 @ToString
 @NoArgsConstructor

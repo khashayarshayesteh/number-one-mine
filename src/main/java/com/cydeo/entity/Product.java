@@ -3,10 +3,7 @@ package com.cydeo.entity;
 
 import com.cydeo.entity.common.BaseEntity;
 import com.cydeo.enums.ProductUnit;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
