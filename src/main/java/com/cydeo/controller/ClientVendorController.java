@@ -20,7 +20,7 @@ public class ClientVendorController {
     @GetMapping("/list")
     public String listAllClientVendor(Model model){
 
-        model.addAttribute("ClientVendors",  clientVendorService.listAllClientVendors());
+        model.addAttribute("clientVendors",  clientVendorService.listAllClientVendors());
 
         return "/clientVendor/clientVendor-list";
     }

@@ -1,5 +1,9 @@
 package com.cydeo;
 
+import com.cydeo.dto.AddressDto;
+import com.cydeo.dto.CompanyDto;
+import com.cydeo.enums.ClientVendorType;
+import lombok.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

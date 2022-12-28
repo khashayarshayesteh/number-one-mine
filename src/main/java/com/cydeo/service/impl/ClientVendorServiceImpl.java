@@ -38,5 +38,5 @@ public class ClientVendorServiceImpl implements ClientVendorService {
                 .map(clientVendor -> mapperUtil.convert(clientVendor, new ClientVendorDto()))
                 .collect(Collectors.toList());
     }
-    }
+}
 
