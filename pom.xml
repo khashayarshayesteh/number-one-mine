@@ -70,12 +70,12 @@
             <version>3.1.1</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.7</version>
                 <configuration>
                     <excludes>
                         <exclude>
@@ -87,5 +87,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
