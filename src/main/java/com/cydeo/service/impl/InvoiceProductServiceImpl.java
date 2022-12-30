@@ -7,6 +7,9 @@ import com.cydeo.repository.InvoiceProductRepository;
 import com.cydeo.service.InvoiceProductService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class InvoiceProductServiceImpl implements InvoiceProductService {
     private final InvoiceProductRepository invoiceProductRepository;
@@ -22,5 +25,14 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     public InvoiceProductDto findById(Long id) {
         InvoiceProduct invoiceProduct = invoiceProductRepository.findById(id).orElseThrow();
         return mapperUtil.convert(invoiceProduct, new InvoiceProductDto());
+    }
+
+
+
+    @Override
+    public List<InvoiceProductDto> findByInvoiceId(Long id) {
+        List<InvoiceProduct> invoiceProductList = invoiceProductRepository.findByInvoice_Id(id);
+        return invoiceProductList.stream().map(invoiceProduct -> mapperUtil.convert(invoiceProduct,new InvoiceProductDto())).collect(Collectors.toList());
+
     }
 }

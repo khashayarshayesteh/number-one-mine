@@ -20,6 +20,6 @@ public class ProductDTOConverter implements Converter<String, ProductDto> {
         if (id == null || id.isBlank()) {
             return null;
         }
-        return productService.findById(Long.parseLong(id));
+        return productService.getProductById(Long.parseLong(id));
     }
 }

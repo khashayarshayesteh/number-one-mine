@@ -17,16 +17,16 @@ import java.util.stream.Collectors;
 public class ClientVendorServiceImpl implements ClientVendorService {
 
     private final MapperUtil mapperUtil;
-    private final CompanyService companyService;
+
 
     private final ClientVendorRepository clientVendorRepository;
+    private final CompanyService companyService;
 
-    public ClientVendorServiceImpl(MapperUtil mapperUtil, CompanyService companyService, ClientVendorRepository clientVendorRepository) {
+    public ClientVendorServiceImpl(MapperUtil mapperUtil, ClientVendorRepository clientVendorRepository, CompanyService companyService) {
         this.mapperUtil = mapperUtil;
-        this.companyService = companyService;
         this.clientVendorRepository = clientVendorRepository;
+        this.companyService = companyService;
     }
-
 
     public ClientVendorDto findById(Long id) {
 
@@ -36,11 +36,14 @@ public class ClientVendorServiceImpl implements ClientVendorService {
     }
     @Override
     public List<ClientVendorDto> listAllClientVendors() {
-        return clientVendorRepository.findAll().stream()
-                .filter(clientVendor-> clientVendor.getClientVendorType().equals(companyService.getCompanyDtoByLoggedInUser().getTitle()))
-                .sorted(Comparator.comparing(ClientVendor::getClientVendorType))
+        List<ClientVendor> clientVendorList = clientVendorRepository.findAll();
+        return clientVendorList.stream()
+                .filter(clientVendor -> clientVendor.getCompany().getTitle().equals(companyService.getCompanyDtoByLoggedInUser().getTitle()))
                 .map(clientVendor -> mapperUtil.convert(clientVendor, new ClientVendorDto()))
+                .sorted(Comparator.comparing(ClientVendorDto::getClientVendorType).reversed()
+                        .thenComparing(ClientVendorDto::getClientVendorName))
                 .collect(Collectors.toList());
     }
+
 }
 

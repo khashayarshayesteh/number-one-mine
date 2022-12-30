@@ -30,19 +30,43 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto findById(Long id) {
 
         Category category = categoryRepository.findById(id)
-                    .orElseThrow(() -> new NoSuchElementException("This category does not exist "));
-            return mapperUtil.convert(category, new CategoryDto());
+                .orElseThrow(() -> new NoSuchElementException("This category does not exist "));
+        return mapperUtil.convert(category, new CategoryDto());
     }
 
     @Override
     public List<CategoryDto> listAllCategories() {
-      return categoryRepository.findAll()
-              .stream()
-              .filter(category -> category.getCompany().getTitle().equals(companyService.getCompanyDtoByLoggedInUser().getTitle()))
-              .sorted(Comparator.comparing(Category::getDescription))
-
-        .map(category -> mapperUtil.convert(category,new CategoryDto())).collect(Collectors.toList());
+        return categoryRepository.findAll()
+                .stream()
+                .filter(category -> category.getCompany().getTitle().equals(companyService.getCompanyDtoByLoggedInUser().getTitle()))
+                .sorted(Comparator.comparing(Category::getDescription))
+                .map(category -> mapperUtil.convert(category, new CategoryDto())).collect(Collectors.toList());
 
 
     }
+
+    @Override
+    public CategoryDto save(CategoryDto categoryDto) {
+        categoryDto.setCompany(companyService.getCompanyDtoByLoggedInUser());
+        Category category = mapperUtil.convert(categoryDto, new Category());
+        Category category1 = categoryRepository.save(category);
+
+        return mapperUtil.convert(category1, new CategoryDto());
+    }
+
+    @Override
+    public boolean isDescriptionExist(String description) {
+        return categoryRepository.existsByDescriptionAndCompany_Title(description, companyService.getCompanyDtoByLoggedInUser().getTitle());
+    }
+
+    @Override
+    public CategoryDto update(CategoryDto categoryDto) {
+
+        Category category = categoryRepository.findById(categoryDto.getId()).orElseThrow();
+        category.setDescription(categoryDto.getDescription());
+        Category category1 = categoryRepository.save(category);
+
+        return mapperUtil.convert(category1, new CategoryDto());
+    }
+
 }

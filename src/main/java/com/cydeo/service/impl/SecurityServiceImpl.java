@@ -3,7 +3,6 @@ package com.cydeo.service.impl;
 import com.cydeo.dto.UserDto;
 import com.cydeo.entity.User;
 import com.cydeo.entity.common.UserPrincipal;
-import com.cydeo.mapper.MapperUtil;
 import com.cydeo.repository.UserRepository;
 import com.cydeo.service.SecurityService;
 import com.cydeo.service.UserService;
@@ -19,8 +18,8 @@ public class SecurityServiceImpl implements SecurityService {
     private final UserRepository userRepository;
 
 
-    public SecurityServiceImpl(UserRepository userRepository, UserService userService, UserRepository userRepository1, MapperUtil mapperUtil) {
-        this.userRepository = userRepository1;
+    public SecurityServiceImpl(UserRepository userRepository, UserService userService) {
+        this.userRepository = userRepository;
         this.userService = userService;
     }
 

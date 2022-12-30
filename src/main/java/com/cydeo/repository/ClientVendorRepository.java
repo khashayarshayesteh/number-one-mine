@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface ClientVendorRepository extends JpaRepository<ClientVendor, Long> {
 
-
-    @Override
-    List<ClientVendor> findAll();
+    List<ClientVendor> findAllByClientVendorType(String clientVendorType );
 }
