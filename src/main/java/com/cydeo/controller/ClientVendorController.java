@@ -1,6 +1,8 @@
 package com.cydeo.controller;
 
 import com.cydeo.dto.ClientVendorDto;
+import com.cydeo.enums.ClientVendorType;
+import com.cydeo.enums.ProductUnit;
 import com.cydeo.service.ClientVendorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,19 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 
 
 @Controller
 @RequestMapping("/clientVendors")
 public class ClientVendorController {
-
     private final ClientVendorService clientVendorService;
-
-
     public ClientVendorController(ClientVendorService clientVendorService) {
         this.clientVendorService = clientVendorService;
     }
-
     @GetMapping("/list")
     public String listAllClientVendor(Model model) {
 
@@ -31,25 +30,19 @@ public class ClientVendorController {
 
         return "/clientVendor/clientVendor-list";
     }
-
     @GetMapping("/create")
     public String createClientVendor(Model model) {
         model.addAttribute(("newClientVendor"), new ClientVendorDto());
-        return "clientVendor/clientVendor-create";
-
+        model.addAttribute("clientVendorTypes", Arrays.asList(ClientVendorType.values()));
+        return "/clientVendor/clientVendor-create";
     }
-
     @PostMapping("/create")
-    public String createClientVendor(@Valid @ModelAttribute("newClientVendor") ClientVendorDto clientVendorDto, BindingResult bindingResult, Model model) {
-
+    public String insertClientVendor(@Valid @ModelAttribute("newClientVendor") ClientVendorDto clientVendorDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("clientVendorTypes", Arrays.asList(ClientVendorType.values()));
             return "/clientVendor/clientVendor-create";
         }
         clientVendorService.save(clientVendorDto);
-        return "redirect:/clientVendor/clientVendor-list";
-
-
+        return "redirect:/clientVendors/list";
     }
-
-
 }

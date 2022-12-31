@@ -4,9 +4,13 @@ import com.cydeo.entity.common.BaseEntity;
 import com.cydeo.enums.ClientVendorType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.engine.internal.Cascade;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,14 +23,17 @@ public class ClientVendor extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ClientVendorType clientVendorType;
 
+
     private String clientVendorName;
     private String phone;
     private String website;
-
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinColumn(name = "address_id")
     private Address address;
 
+    @NotNull
     @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
 
     public ClientVendor(Long id, LocalDateTime insertDateTime, Long insertUserId, LocalDateTime lastUpdateDateTime, Long lastUpdateUserId, Boolean isDeleted, ClientVendorType clientVendorType, String clientVendorName, String phone, String website, Address address, Company company) {

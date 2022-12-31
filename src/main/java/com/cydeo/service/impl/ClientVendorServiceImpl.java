@@ -7,7 +7,6 @@ import com.cydeo.repository.ClientVendorRepository;
 import com.cydeo.service.ClientVendorService;
 import com.cydeo.service.CompanyService;
 import org.springframework.stereotype.Service;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class ClientVendorServiceImpl implements ClientVendorService {
-
     private final MapperUtil mapperUtil;
 
     private final ClientVendorRepository clientVendorRepository;
@@ -27,13 +25,13 @@ public class ClientVendorServiceImpl implements ClientVendorService {
         this.companyService = companyService;
     }
 
-
     public ClientVendorDto findById(Long id) {
 
         ClientVendor clientVendor = clientVendorRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("This client or vendor does not exist "));
         return mapperUtil.convert(clientVendor, new ClientVendorDto());
     }
+
     @Override
     public List<ClientVendorDto> listAllClientVendors() {
         List<ClientVendor> clientVendorList = clientVendorRepository.findAll();
@@ -45,12 +43,10 @@ public class ClientVendorServiceImpl implements ClientVendorService {
                 .collect(Collectors.toList());
     }
 
-
     @Override
-    public void  save(ClientVendorDto clientVendorDto) {
-        clientVendorRepository.save(mapperUtil.convert(clientVendorDto,new ClientVendor()));
+    public void save(ClientVendorDto clientVendorDto) {
+        clientVendorDto.setCompany(companyService.getCompanyDtoByLoggedInUser());
+        clientVendorRepository.save(mapperUtil.convert(clientVendorDto, new ClientVendor()));
     }
-
-
 }
 

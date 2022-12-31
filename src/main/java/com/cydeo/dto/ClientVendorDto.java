@@ -22,22 +22,20 @@ public class ClientVendorDto {
 
     private Long id;
 
-    @Valid
-    @NotNull(message = "ClientVendor name can not be blank.")
+
     @Column(unique = true)
-    @Size(max = 50, min = 2, message = "ClientVendor Name must be between 2 and 50 characters long.")
+    @Size(max = 50, min = 2, message = "Company Name should have 2-50 characters long.")
+    @NotBlank(message = "Company Name is a required field.")
     private String clientVendorName;
 
-    @NotNull(message = "phone number cannot be blank.")
-    @Pattern(regexp = "^\\d{10}$")
-    // ^ asserts position at start of a line-d matches a digit (equivalent to [0-9]){10} matches the previous token exactly 10 times$ asserts position at the end of a line
+    @NotBlank(message = "Phone Number is required field and may be in any valid phone number format.")
+    @Pattern(regexp = "^\\d{10}$", message = "phone is required field and may be in any valid phone number format.")
     private String phone;
 
-    @Pattern(regexp = "^http(s{0,1})://[a-zA-Z0-9/\\-\\.]+.([A-Za-z/] {2,5})[a-zA-Z0-9/\\&\\?\\=\\-\\.\\~\\%]*")
+    @Pattern(regexp = "^(http:\\/\\/|https:\\/\\/)?(www\\.)?[a-zA-Z0-9-_\\.]+\\.[a-zA-Z]+(:\\d+)?(\\/[a-zA-Z\\d\\.\\-_]*)*[a-zA-Z.!@#$%&=-_'\":,.?\\d*)(]*$", message = "Website should have a valid format.")
     private String website;
 
-    @Valid
-    @NotNull(message = "Please select type.")
+    @NotBlank(message = "Please select type.")
     private ClientVendorType clientVendorType;
 
     @Valid
