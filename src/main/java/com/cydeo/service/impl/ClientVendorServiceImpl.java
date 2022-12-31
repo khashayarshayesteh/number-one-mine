@@ -18,7 +18,6 @@ public class ClientVendorServiceImpl implements ClientVendorService {
 
     private final MapperUtil mapperUtil;
 
-
     private final ClientVendorRepository clientVendorRepository;
     private final CompanyService companyService;
 
@@ -27,6 +26,7 @@ public class ClientVendorServiceImpl implements ClientVendorService {
         this.clientVendorRepository = clientVendorRepository;
         this.companyService = companyService;
     }
+
 
     public ClientVendorDto findById(Long id) {
 
@@ -44,6 +44,13 @@ public class ClientVendorServiceImpl implements ClientVendorService {
                         .thenComparing(ClientVendorDto::getClientVendorName))
                 .collect(Collectors.toList());
     }
+
+
+    @Override
+    public void  save(ClientVendorDto clientVendorDto) {
+        clientVendorRepository.save(mapperUtil.convert(clientVendorDto,new ClientVendor()));
+    }
+
 
 }
 

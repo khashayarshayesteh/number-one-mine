@@ -9,4 +9,7 @@ public interface ClientVendorService {
     ClientVendorDto findById(Long id);
 
     List<ClientVendorDto> listAllClientVendors();
+
+    void save(ClientVendorDto  clientVendorDto);
+
 }

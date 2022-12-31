@@ -1,10 +1,17 @@
 package com.cydeo.controller;
 
+import com.cydeo.dto.ClientVendorDto;
 import com.cydeo.service.ClientVendorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("/clientVendors")
@@ -23,6 +30,25 @@ public class ClientVendorController {
         model.addAttribute("clientVendors", clientVendorService.listAllClientVendors());
 
         return "/clientVendor/clientVendor-list";
+    }
+
+    @GetMapping("/create")
+    public String createClientVendor(Model model) {
+        model.addAttribute(("newClientVendor"), new ClientVendorDto());
+        return "clientVendor/clientVendor-create";
+
+    }
+
+    @PostMapping("/create")
+    public String createClientVendor(@Valid @ModelAttribute("newClientVendor") ClientVendorDto clientVendorDto, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "/clientVendor/clientVendor-create";
+        }
+        clientVendorService.save(clientVendorDto);
+        return "redirect:/clientVendor/clientVendor-list";
+
+
     }
 
 

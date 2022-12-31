@@ -7,5 +7,9 @@ import java.util.List;
 
 public interface ClientVendorRepository extends JpaRepository<ClientVendor, Long> {
 
-    List<ClientVendor> findAllByClientVendorType(String clientVendorType );
+
+    List<ClientVendor> findAllByClientVendorType(String clientVendorType);
+
+
+
 }
