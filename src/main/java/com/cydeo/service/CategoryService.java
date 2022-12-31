@@ -14,5 +14,6 @@ public interface CategoryService {
    boolean isDescriptionExist(String description);
 
    CategoryDto update(CategoryDto categoryDto);
+   void deleteById(Long id);
 }
 

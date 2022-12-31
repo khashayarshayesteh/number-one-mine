@@ -26,7 +26,7 @@ public class Company extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CompanyStatus companyStatus;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Address address;
 
     public Company(Long id, LocalDateTime insertDateTime, Long insertUserId, LocalDateTime lastUpdateDateTime, Long lastUpdateUserId, Boolean isDeleted, String title, String phone, String website, CompanyStatus companyStatus, Address address) {

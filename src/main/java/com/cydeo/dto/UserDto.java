@@ -5,20 +5,48 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Valid
 public class UserDto {
 
     private Long id;
+
+    @NotBlank(message = "Username is required")
+    @Email (message = "Email is required field" )
     private String username;
+
+    @NotBlank (message = "password is required field")
+    @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,}", message = "password should be at least 4 characters long and contains 1 capital letter, 1 small letter, 1 special character or number")
     private String password;
+
+    @NotNull(message = "Password should match")
     private String confirmPassword;
+
+    @NotBlank (message = "First name is required field")
+    @Size(max = 50, min = 2, message = "First name must be between 2 and 50 characters long")
     private String firstname;
+
+    @NotBlank (message = "Last name is required field")
+    @Size(max = 50, min = 2, message = "First name must be between 2 and 50 characters long")
     private String lastname;
+
+    @NotBlank (message = "Phone number is required field")
+    @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$" // +111 (202) 555-0125  +1 (202) 555-0125
+            + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"                                  // +111 123 456 789
+            + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$", message = "Phone Number is required field and may be in any valid phone number format.")
     private String phone;
+
+    @NotNull(message = "Please select a role")
     private RoleDto role;
+
+    @NotNull(message = "Please select a customer")
     private CompanyDto company;
+
     private boolean isOnlyAdmin;
 
     public Long getId() {

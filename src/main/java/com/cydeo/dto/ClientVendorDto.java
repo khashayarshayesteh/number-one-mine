@@ -2,11 +2,8 @@ package com.cydeo.dto;
 
 import com.cydeo.enums.ClientVendorType;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -32,13 +29,13 @@ public class ClientVendorDto {
     @Pattern(regexp = "^\\d{10}$", message = "phone is required field and may be in any valid phone number format.")
     private String phone;
 
-    @Pattern(regexp = "^(http:\\/\\/|https:\\/\\/)?(www\\.)?[a-zA-Z0-9-_\\.]+\\.[a-zA-Z]+(:\\d+)?(\\/[a-zA-Z\\d\\.\\-_]*)*[a-zA-Z.!@#$%&=-_'\":,.?\\d*)(]*$", message = "Website should have a valid format.")
+   @Pattern(regexp = "^(http:\\/\\/|https:\\/\\/)?(www\\.)?[a-zA-Z0-9-_\\.]+\\.[a-zA-Z]+(:\\d+)?(\\/[a-zA-Z\\d\\.\\-_]*)*[a-zA-Z.!@#$%&=-_'\":,.?\\d*)(]*$", message = "Website should have a valid format.")
     private String website;
 
-    @NotBlank(message = "Please select type.")
+    @NotNull(message = "Please select type.")
     private ClientVendorType clientVendorType;
 
-    @Valid
+   @Valid
     private AddressDto address;
     private CompanyDto company;
 

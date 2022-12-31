@@ -29,7 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findByUsername(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("User not found"));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
         return mapperUtil.convert(user, new UserDto());
     }
 
@@ -58,23 +59,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findById(Long id) {
-       User user = userRepository.findById(id).orElseThrow(()->new NoSuchElementException("User not found"));
-        return mapperUtil.convert(user,new UserDto());
+        User user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User not found"));
+        return mapperUtil.convert(user, new UserDto());
     }
 
     @Override
     public void update(UserDto userDto) {
-    User user1 = userRepository.findById(userDto.getId()).get();
-    User convertedUser = mapperUtil.convert(userDto,new User());
-    convertedUser.setId(user1.getId());
-    userRepository.save(convertedUser);
+        User user1 = userRepository.findById(userDto.getId()).get();
+        User convertedUser = mapperUtil.convert(userDto, new User());
+        convertedUser.setId(user1.getId());
+        userRepository.save(convertedUser);
     }
 
     @Override
     public void deleteById(Long id) {
         User user = userRepository.findById(id).get();
         user.setIsDeleted(true);
-        user.setUsername(user.getUsername()+"-"+user.getId());
+        user.setUsername(user.getUsername() + "-" + user.getId());
         userRepository.save(user);
+    }
+
+    @Override
+    public void save(UserDto user) {
+        userRepository.save(mapperUtil.convert(user, new User()));
     }
 }

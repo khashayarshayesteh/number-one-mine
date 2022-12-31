@@ -1,8 +1,7 @@
 package com.cydeo.enums;
 
+
 import lombok.Getter;
-
-
 @Getter
 public enum CompanyStatus {
     ACTIVE("Active"), PASSIVE("Passive");

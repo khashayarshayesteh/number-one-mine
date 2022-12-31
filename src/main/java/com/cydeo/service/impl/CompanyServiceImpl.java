@@ -48,4 +48,45 @@ public class CompanyServiceImpl implements CompanyService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<CompanyDto> listCompaniesByLoggedInUser() {
+
+        if(securityService.getLoggedInUser().getRole().getId()==1L){
+            return listAllCompanies();
+        }
+        if(securityService.getLoggedInUser().getRole().getId()==2L){
+            return listAllCompanies().stream().filter(companyDto -> companyDto.getId()==2L).collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    @Override
+    public void saveCompany(CompanyDto companyDto) {
+        companyDto.setCompanyStatus(CompanyStatus.PASSIVE);
+        companyRepository.save(mapperUtil.convert(companyDto, new Company()));
+
+    }
+
+    @Override
+    public void updateCompany(CompanyDto companyDto) {
+        Company company= companyRepository.findById(companyDto.getId()).get();
+        Company updatedCompany= mapperUtil.convert(companyDto, new Company());
+        updatedCompany.setId(company.getId());
+        updatedCompany.setCompanyStatus(company.getCompanyStatus());
+        companyRepository.save(updatedCompany);
+    }
+
+    @Override
+    public void deactivateCompany(Long id) {
+        Company company= companyRepository.findById(id).get();
+        company.setCompanyStatus(CompanyStatus.PASSIVE);
+        companyRepository.save(company);
+    }
+
+    @Override
+    public void activateCompany(Long id) {
+        Company company = companyRepository.findById(id).get();
+        company.setCompanyStatus(CompanyStatus.ACTIVE);
+        companyRepository.save(company);
+    }
 }

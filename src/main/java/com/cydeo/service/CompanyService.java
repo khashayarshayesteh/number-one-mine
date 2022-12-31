@@ -12,8 +12,12 @@ public interface CompanyService {
 
     List<CompanyDto> listAllCompanies();
 
+    void saveCompany(CompanyDto companyDto);
 
+    void updateCompany(CompanyDto companyDto);
 
+    void deactivateCompany(Long id);
 
-
+    void activateCompany(Long id);
+    List<CompanyDto> listCompaniesByLoggedInUser();
 }

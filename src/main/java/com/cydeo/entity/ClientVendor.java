@@ -4,10 +4,7 @@ import com.cydeo.entity.common.BaseEntity;
 import com.cydeo.enums.ClientVendorType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
-import org.hibernate.engine.internal.Cascade;
-import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -8,8 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-//import javax.validation.Valid;
-
 
 @Controller
 @RequestMapping("/categories")
@@ -30,6 +28,7 @@ public class CategoryController {
     @GetMapping("/create")
     public String createCategory(Model model) {
         model.addAttribute("newCategory", new CategoryDto());
+
         return "category/category-create";
     }
 
@@ -46,14 +45,16 @@ public class CategoryController {
 
         return "redirect:/categories/list";
     }
+
     @GetMapping("/update/{id}")
-    public String editCategory(@PathVariable("id") Long id, Model model){
-        model.addAttribute("category",categoryService.findById(id));
+    public String editCategory(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("category", categoryService.findById(id));
 
         return "category/category-update";
     }
+
     @PostMapping("/update/{id}")
-    public String updateCategory(@Valid @ModelAttribute ("category") CategoryDto categoryDto,BindingResult bindingResult,@PathVariable Long id){
+    public String updateCategory(@Valid @ModelAttribute("category") CategoryDto categoryDto, BindingResult bindingResult, @PathVariable Long id) {
         categoryDto.setId(id);
         boolean isDescriptionExist = categoryService.isDescriptionExist(categoryDto.getDescription());
         if (isDescriptionExist) {
@@ -64,6 +65,12 @@ public class CategoryController {
         }
         categoryService.update(categoryDto);
 
+        return "redirect:/categories/list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteCategory(@PathVariable("id") Long id) {
+        categoryService.deleteById(id);
         return "redirect:/categories/list";
     }
 

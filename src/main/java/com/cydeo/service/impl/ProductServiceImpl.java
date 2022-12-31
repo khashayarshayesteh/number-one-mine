@@ -1,5 +1,6 @@
 package com.cydeo.service.impl;
 
+
 import com.cydeo.dto.ProductDto;
 import com.cydeo.entity.Product;
 import com.cydeo.mapper.MapperUtil;
@@ -19,9 +20,11 @@ public class ProductServiceImpl implements ProductService {
 
     private final MapperUtil mapperUtil;
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
     private final CompanyService companyService;
     private final SecurityService securityService;
+    private final CategoryRepository categoryRepository;
+
+
 
     public ProductServiceImpl(MapperUtil mapperUtil, ProductRepository productRepository, CategoryRepository categoryRepository, CompanyService companyService, SecurityService securityService) {
         this.mapperUtil = mapperUtil;
@@ -50,17 +53,46 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void save(ProductDto dto) {
+    public ProductDto save(ProductDto productDto) {
+        productDto.getCategory().setCompany(companyService.getCompanyDtoByLoggedInUser());
+        Product product = mapperUtil.convert(productDto, new Product());
+        Product product1= productRepository.save(product);
+        return mapperUtil.convert(product1, new ProductDto());
+
 
     }
 
     @Override
-    public void update(ProductDto dto) {
+    public void update(ProductDto productDto) {
 
+        Product product = productRepository.findProductById(productDto.getId());
+        ProductDto convertedProduct = mapperUtil.convert(product, new ProductDto());
+        convertedProduct.setId(product.getId());
+        convertedProduct.setCategory(productDto.getCategory());
+        convertedProduct.setName(productDto.getName());
+        convertedProduct.setProductUnit(productDto.getProductUnit());
+        convertedProduct.setLowLimitAlert(productDto.getLowLimitAlert());
+        productRepository.save(mapperUtil.convert(convertedProduct, new Product()));
     }
 
     @Override
     public void deleteById(Long id) {
 
     }
+
+    @Override
+    public boolean isNameExist(String name) {
+        return productRepository.existsByNameAndAndCategory_Company_Title(name, companyService.getCompanyDtoByLoggedInUser().getTitle());
+    }
+
+    @Override
+    public boolean checkAnyProductExist(Long id) {
+        List <Product> products = productRepository.findAllByCategoryId(id);
+        return products.size() > 0;
+    }
+    @Override
+    public boolean isInStock(Long id) {
+        return  productRepository.getQuantityInStock(id) > 0;
+    }
 }
+
