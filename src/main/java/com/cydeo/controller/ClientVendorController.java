@@ -60,7 +60,7 @@ public class ClientVendorController {
             return "clientVendor/clientVendor-update";
         }
         clientVendorService.updateClientVendor(clientVendorDto);
-        return "redirect:/clientVendors/list"; //test
+        return "redirect:/clientVendors/list"; //test2
     }
 
 
