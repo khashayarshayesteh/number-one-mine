@@ -25,17 +25,24 @@ public class ClientVendorDto {
     @NotBlank(message = "Company Name is a required field.")
     private String clientVendorName;
 
-    @NotBlank(message = "Phone Number is required field and may be in any valid phone number format.")
-    @Pattern(regexp = "^\\d{10}$", message = "phone is required field and may be in any valid phone number format.")
+//    @NotBlank(message = "Phone Number is required field and may be in any valid phone number format.")
+//    @Pattern(regexp = "^\\d{10}$", message = "phone is required field and may be in any valid phone number format.")
+//    private String phone;
+
+    @NotBlank (message = "Phone number is required field")
+    @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$" // +111 (202) 555-0125  +1 (202) 555-0125
+            + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"                                  // +111 123 456 789
+            + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$", message = "Phone Number is required field and may be in any valid phone number format.")
     private String phone;
 
-   @Pattern(regexp = "^(http:\\/\\/|https:\\/\\/)?(www\\.)?[a-zA-Z0-9-_\\.]+\\.[a-zA-Z]+(:\\d+)?(\\/[a-zA-Z\\d\\.\\-_]*)*[a-zA-Z.!@#$%&=-_'\":,.?\\d*)(]*$", message = "Website should have a valid format.")
+
+    @Pattern(regexp = "^(http:\\/\\/|https:\\/\\/)?(www\\.)?[a-zA-Z0-9-_\\.]+\\.[a-zA-Z]+(:\\d+)?(\\/[a-zA-Z\\d\\.\\-_]*)*[a-zA-Z.!@#$%&=-_'\":,.?\\d*)(]*$", message = "Website should have a valid format.")
     private String website;
 
     @NotNull(message = "Please select type.")
     private ClientVendorType clientVendorType;
 
-   @Valid
+    @Valid
     private AddressDto address;
     private CompanyDto company;
 

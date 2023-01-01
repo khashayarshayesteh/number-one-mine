@@ -23,12 +23,15 @@ public class ClientVendorServiceImpl implements ClientVendorService {
     private final SecurityService securityService;
     private final CompanyService companyService;
 
+
     public ClientVendorServiceImpl(MapperUtil mapperUtil, ClientVendorRepository clientVendorRepository, SecurityService securityService, CompanyService companyService) {
         this.mapperUtil = mapperUtil;
         this.clientVendorRepository = clientVendorRepository;
         this.securityService = securityService;
         this.companyService = companyService;
+
     }
+
 
     public ClientVendorDto findById(Long id) {
 
@@ -59,11 +62,29 @@ public class ClientVendorServiceImpl implements ClientVendorService {
 
         return vendorList.stream().map(vendor -> mapperUtil.convert(vendor, new ClientVendorDto())).collect(Collectors.toList());
     }
+
     @Override
     public void save(ClientVendorDto clientVendorDto) {
         clientVendorDto.setCompany(companyService.getCompanyDtoByLoggedInUser());
         clientVendorRepository.save(mapperUtil.convert(clientVendorDto, new ClientVendor()));
     }
+
+    @Override
+    public ClientVendorDto updateClientVendor(ClientVendorDto clientVendorDto) {
+        ClientVendor clientVendor = clientVendorRepository.findById(clientVendorDto.getId()).get();
+        ClientVendor updatedClientVendor = mapperUtil.convert(clientVendorDto, new ClientVendor());
+        updatedClientVendor.setId(clientVendor.getId());
+        updatedClientVendor.setClientVendorType(clientVendor.getClientVendorType());
+        clientVendorRepository.save(updatedClientVendor);
+
+        return mapperUtil.convert(updatedClientVendor, new ClientVendorDto());
+    }
+
+    @Override
+    public Object findClientVendorAddress(Long id) {
+        return clientVendorRepository.findById(id).get().getAddress();
+    }
+
 }
 
 
