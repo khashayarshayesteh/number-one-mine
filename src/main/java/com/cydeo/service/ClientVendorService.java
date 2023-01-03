@@ -1,8 +1,10 @@
 package com.cydeo.service;
 
 import com.cydeo.dto.ClientVendorDto;
-import com.cydeo.enums.ClientVendorType;
+import com.cydeo.dto.CompanyDto;
+import com.cydeo.entity.Address;
 
+import java.net.DatagramPacket;
 import java.util.List;
 
 public interface ClientVendorService {
@@ -11,12 +13,16 @@ public interface ClientVendorService {
 
     List<ClientVendorDto> listCompanyVendors();
 
-
     List<ClientVendorDto> listAllClientVendors();
 
-    void save(ClientVendorDto clientVendorDto);
+    void save(ClientVendorDto  clientVendorDto);
+    List<ClientVendorDto> listCompanyClients();
 
-    ClientVendorDto updateClientVendor(ClientVendorDto clientVendorDto);
+    ClientVendorDto findClientVendorById(Long  id);
 
-    Object findClientVendorAddress(Long  id);
+    List listAllClientVendorTypes();
+
+    Address findClientVendorAddress(Long  id);
+
+    ClientVendorDto updateClientVendor(ClientVendorDto  clientVendorDto);
 }
